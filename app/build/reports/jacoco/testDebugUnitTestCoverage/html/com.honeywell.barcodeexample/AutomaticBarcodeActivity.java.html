@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AutomaticBarcodeActivity.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">app</a> &gt; <a href="index.source.html" class="el_package">com.honeywell.barcodeexample</a> &gt; <span class="el_source">AutomaticBarcodeActivity.java</span></div><h1>AutomaticBarcodeActivity.java</h1><pre class="source lang-java linenums">package com.honeywell.barcodeexample;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import android.app.Activity;
+import android.content.pm.ActivityInfo;
+import android.os.Build;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
+import android.content.pm.ActivityInfo;
+import android.widget.ToggleButton;
+
+import static com.honeywell.aidc.BarcodeReader.PROPERTY_IMAGER_FOCUS_INTELLIGENT;
+
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowCompat;
+import androidx.core.view.WindowInsetsCompat;
+
+import com.honeywell.aidc.*;
+
+<span class="fc" id="L29">public class AutomaticBarcodeActivity extends Activity implements BarcodeReader.BarcodeListener,</span>
+        BarcodeReader.TriggerListener {
+
+    private com.honeywell.aidc.BarcodeReader barcodeReader;
+
+    private com.honeywell.aidc.BarcodeReader mBarcodeReader;
+    private ListView barcodeList;
+    private TextView mCountValueLabel;
+<span class="fc" id="L37">    private int mTotalContinuousScanCount = 0;</span>
+    //private ListView barcodeList;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+<span class="pc bpc" id="L42" title="1 of 2 branches missed.">        if (Build.VERSION.SDK_INT &gt;= 35) { // Android 15</span>
+<span class="fc" id="L43">            WindowCompat.setDecorFitsSystemWindows(getWindow(), false);</span>
+<span class="fc" id="L44">            final View root = findViewById(android.R.id.content);</span>
+<span class="pc bpc" id="L45" title="1 of 2 branches missed.">            if (root != null) {</span>
+<span class="fc" id="L46">                ViewCompat.setOnApplyWindowInsetsListener(root, (v, insets) -&gt; {</span>
+<span class="fc" id="L47">                    final androidx.core.graphics.Insets sysBars = insets.getInsets(WindowInsetsCompat.Type.statusBars() | WindowInsetsCompat.Type.navigationBars());</span>
+<span class="fc" id="L48">                    v.setPadding(v.getPaddingLeft(),sysBars.top+30,v.getPaddingRight(),sysBars.bottom);</span>
+<span class="fc" id="L49">                    return insets;});</span>
+<span class="fc" id="L50">                root.requestApplyInsets();</span>
+            }
+        }
+<span class="fc" id="L53">        Log.d(&quot;Activity&quot;,&quot;Entering into onCreate&quot;);</span>
+<span class="fc" id="L54">        super.onCreate(savedInstanceState);</span>
+<span class="fc" id="L55">        setContentView(R.layout.activity_barcode);</span>
+<span class="fc" id="L56">        ToggleButton toggleContinuous = findViewById(R.id.toggleContinuous);</span>
+
+<span class="fc" id="L58">        mCountValueLabel = findViewById(R.id.countValueLabel);</span>
+
+
+<span class="pc bpc" id="L61" title="1 of 2 branches missed.">        if(Build.MODEL.startsWith(&quot;VM1A&quot;)) {</span>
+<span class="nc" id="L62">            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);</span>
+        }
+        else{
+<span class="fc" id="L65">            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);</span>
+        }
+
+        // get bar code instance from MainActivity
+<span class="fc" id="L69">        barcodeReader = MainActivity.getBarcodeObject();</span>
+<span class="fc" id="L70">        Map&lt;String, Object&gt; properties = new HashMap&lt;String, Object&gt;();</span>
+<span class="fc" id="L71">        setPropertiesForSymbologies(properties);//set Properties for symbologies and other settings</span>
+
+<span class="pc bpc" id="L73" title="1 of 2 branches missed.">        if (barcodeReader != null) {</span>
+
+            // register bar code event listener
+<span class="nc" id="L76">            barcodeReader.addBarcodeListener(this);</span>
+
+            // set the trigger mode to client control
+            try {
+<span class="nc" id="L80">                barcodeReader.setProperty(BarcodeReader.PROPERTY_TRIGGER_CONTROL_MODE,</span>
+                        BarcodeReader.TRIGGER_CONTROL_MODE_AUTO_CONTROL);
+
+<span class="nc" id="L83">            } catch (UnsupportedPropertyException e) {</span>
+<span class="nc" id="L84">                Toast.makeText(this, &quot;Failed to apply properties&quot;, Toast.LENGTH_SHORT).show();</span>
+<span class="nc" id="L85">            }</span>
+            // register trigger state change listener
+<span class="nc" id="L87">            barcodeReader.addTriggerListener(this);</span>
+
+            // Apply the settings
+<span class="nc" id="L90">            barcodeReader.setProperties(properties);</span>
+        }
+<span class="fc" id="L92">        toggleContinuous.setOnCheckedChangeListener((buttonView, isChecked) -&gt; { setContinuousScan(isChecked); });</span>
+        // get initial list
+<span class="fc" id="L94">        barcodeList = (ListView) findViewById(R.id.listViewBarcodeData);</span>
+<span class="fc" id="L95">    }</span>
+
+    private void setPropertiesForSymbologies(Map&lt;String, Object&gt; properties) {
+        // Set Symbologies On/Off
+<span class="fc" id="L99">        properties.put(BarcodeReader.PROPERTY_CODE_128_ENABLED, true);</span>
+<span class="fc" id="L100">        properties.put(BarcodeReader.PROPERTY_GS1_128_ENABLED, true);</span>
+<span class="fc" id="L101">        properties.put(BarcodeReader.PROPERTY_QR_CODE_ENABLED, true);</span>
+<span class="fc" id="L102">        properties.put(BarcodeReader.PROPERTY_CODE_39_ENABLED, true);</span>
+<span class="fc" id="L103">        properties.put(BarcodeReader.PROPERTY_DATAMATRIX_ENABLED, true);</span>
+<span class="fc" id="L104">        properties.put(BarcodeReader.PROPERTY_UPC_A_ENABLE, true);</span>
+<span class="fc" id="L105">        properties.put(BarcodeReader.PROPERTY_EAN_13_ENABLED, false);</span>
+<span class="fc" id="L106">        properties.put(BarcodeReader.PROPERTY_AZTEC_ENABLED, false);</span>
+<span class="fc" id="L107">        properties.put(BarcodeReader.PROPERTY_CODABAR_ENABLED, false);</span>
+<span class="fc" id="L108">        properties.put(BarcodeReader.PROPERTY_INTERLEAVED_25_ENABLED, false);</span>
+<span class="fc" id="L109">        properties.put(BarcodeReader.PROPERTY_PDF_417_ENABLED, false);</span>
+        // Set Max Code 39 barcode length
+<span class="fc" id="L111">        properties.put(BarcodeReader.PROPERTY_CODE_39_MAXIMUM_LENGTH, 10);</span>
+        // Turn on center decoding
+<span class="fc" id="L113">        properties.put(BarcodeReader.PROPERTY_CENTER_DECODE, true);</span>
+        // Enable bad read response
+<span class="fc" id="L115">        properties.put(BarcodeReader.PROPERTY_NOTIFICATION_BAD_READ_ENABLED, true);</span>
+//           /* // Sets time period for decoder timeout in any mode
+//           properties.put(BarcodeReader.PROPERTY_DECODER_TIMEOUT,  400);
+//            try {
+//                properties.put(BarcodeReader.PROPERTY_TRIG_PRES_MODE, true);
+//                properties.put(BarcodeReader.PROPERTY_TRIG_PRES_AIMER_ON, true);
+//                properties.put(BarcodeReader.PROPERTY_TRIG_PRES_ILLUM_ON_TIME, 3000);
+//                properties.put(BarcodeReader.PROPERTY_TRIG_PRES_IDLE_ILLUM_ON, true);
+//                properties.put(BarcodeReader.PROPERTY_TRIG_PRES_IDLE_ILLUM_ON_INTENSITY, 50);
+//              //  barcodeReader.softwareTrigger(true);
+//
+//            } catch (Exception exception) {
+//                Log.d(&quot;ClientBarcode&quot;, exception.getMessage());
+//            }*/
+<span class="fc" id="L129">        properties.put(BarcodeReader.PROPERTY_INTERLEAVED_25_ENABLED,  true);</span>
+<span class="fc" id="L130">        properties.put(BarcodeReader.PROPERTY_INTERLEAVED_25_REDUNDANCY_MODE,  10);</span>
+<span class="fc" id="L131">        properties.put(BarcodeReader.PROPERTY_LINEAR_VOID_HANDLING,  false);</span>
+<span class="fc" id="L132">        properties.put(BarcodeReader.PROPERTY_DATA_PROCESSOR_LAUNCH_BROWSER,false);</span>
+            /* Combined regex contains two items
+                            1 Customized format and is for content start with 2 letter(ignore case) amd followed by 3 digit
+                            2 Embedded format for IP format xx.xx.xx.xx
+                        */
+<span class="fc" id="L137">        String comreg = &quot;[{\&quot;enabled\&quot;:true,\&quot;key\&quot;:\&quot;chanum\&quot;,\&quot;regexValue\&quot;:\&quot;[A-Z a-z]{2}\\\\d{3}\&quot;,\&quot;type\&quot;:\&quot;CUSTOMIZED\&quot;},&quot; +</span>
+                &quot;{\&quot;enabled\&quot;:true,\&quot;key\&quot;:\&quot;OCR_CONTENT_REGEX_IP_ADDRESS\&quot;,\&quot;type\&quot;:\&quot;EMBEDDED\&quot;}]&quot;;
+<span class="fc" id="L139">        properties.put(BarcodeReader.PROPERTY_OCR_ENABLED,true);</span>
+<span class="fc" id="L140">        properties.put(BarcodeReader.PROPERTY_OCR_EXCLUSIVE,true);</span>
+<span class="fc" id="L141">        properties.put(BarcodeReader.PROPERTY_OCR_CONTENT_REGEX_SEQUENCE,comreg);</span>
+        //properties.put(BarcodeReader.PROPERTY_IMAGER_FOCUS,&quot;Intelligent&quot;);
+<span class="fc" id="L143">        properties.put(BarcodeReader.PROPERTY_IMAGER_FOCUS,PROPERTY_IMAGER_FOCUS_INTELLIGENT);</span>
+<span class="fc" id="L144">        properties.put(BarcodeReader.PROPERTY_IMAGER_OVERRIDE_RECOMMENDED_VALUES,true);</span>
+<span class="fc" id="L145">        properties.put(BarcodeReader.PROPERTY_DATAMATRIX_QR_DIGITAL_LINK_CONVERSION, &quot;Enable&quot;);</span>
+<span class="fc" id="L146">        properties.put(BarcodeReader.PROPERTY_CODE39_SHORT_MARGIN, &quot;Enable&quot;);</span>
+        //  properties.put(BarcodeReader.PROPERTY_TRIG_PRES_STREAMING_ON, 0);
+<span class="fc" id="L148">        properties.put(BarcodeReader.PROPERTY_IMG_AIMER_LOW_POWER, 1);</span>
+<span class="fc" id="L149">        properties.put(BarcodeReader.PROPERTY_DEC_ML_ENABLED, 1);</span>
+<span class="fc" id="L150">        properties.put(BarcodeReader.PROPERTY_DEC_MLS_ROI, &quot;ROIs_Aimer_Proximity&quot;);</span>
+<span class="fc" id="L151">        properties.put(BarcodeReader.PROPERTY_DEC_CON_ROI, 50);</span>
+<span class="fc" id="L152">        properties.put(BarcodeReader.PROPERTY_DEC_DYNAMIC_TIMEOUT, 1);</span>
+<span class="fc" id="L153">        properties.put(BarcodeReader.PROPERTY_DEC_QR_USE_ALT_ID, true);</span>
+<span class="fc" id="L154">        properties.put(BarcodeReader.PROPERTY_DECODER_TIMEOUT,  1);</span>
+<span class="fc" id="L155">        properties.put(BarcodeReader.PROPERTY_DEC_DECODE_FILTER,</span>
+                &quot;if (_event == 'decode') { &quot; +
+                        &quot;  prefix = _data.sub('0','2'); &quot; +
+                        &quot;  if (prefix == 'XX') { _data = ''; } &quot; +
+                        &quot;}&quot;);
+<span class="fc" id="L160">    }</span>
+    private void setContinuousScan(boolean enableContinuous) {
+<span class="pc bpc" id="L162" title="1 of 2 branches missed.">        if (barcodeReader != null) {</span>
+            try {
+<span class="nc" id="L164">                Map&lt;String, Object&gt; properties = new HashMap&lt;&gt;();</span>
+
+<span class="nc bnc" id="L166" title="All 2 branches missed.">                if (enableContinuous) {</span>
+                    // Enable continuous streaming mode
+                    //properties.put(BarcodeReader.PROPERTY_TRIGGER_SCAN_MODE,
+                    // BarcodeReader.TRIGGER_SCAN_MODE_CONTINUOUS);
+<span class="nc" id="L170">                    properties.put(BarcodeReader.PROPERTY_TRIG_PRES_MODE, true);</span>
+<span class="nc" id="L171">                    properties.put(BarcodeReader.PROPERTY_TRIG_PRES_STREAMING_ON, 1); // 1 = ON</span>
+<span class="nc" id="L172">                    properties.put(BarcodeReader.PROPERTY_DECODER_TIMEOUT,  0);</span>
+<span class="nc" id="L173">                    mTotalContinuousScanCount = 0;</span>
+<span class="nc" id="L174">                    mCountValueLabel.setVisibility(View.VISIBLE);</span>
+<span class="nc" id="L175">                    mCountValueLabel.setText(&quot;&quot;);</span>
+                }
+
+                else {
+                    // Restore manual trigger mode
+<span class="nc" id="L180">                    barcodeReader.setProperty(BarcodeReader.PROPERTY_TRIGGER_CONTROL_MODE,</span>
+                            BarcodeReader.TRIGGER_CONTROL_MODE_AUTO_CONTROL);
+
+<span class="nc" id="L183">                    properties.put(BarcodeReader.PROPERTY_TRIGGER_SCAN_MODE,</span>
+                            BarcodeReader.TRIGGER_SCAN_MODE_ONESHOT);
+
+<span class="nc" id="L186">                    properties.put(BarcodeReader.PROPERTY_TRIG_PRES_MODE, false); // disable presentation mode</span>
+<span class="nc" id="L187">                    properties.put(BarcodeReader.PROPERTY_TRIG_PRES_STREAMING_ON, 0); // stop streaming</span>
+<span class="nc" id="L188">                    properties.put(BarcodeReader.PROPERTY_DECODER_TIMEOUT, 400); // reasonable timeout</span>
+
+<span class="nc" id="L190">                    mCountValueLabel.setVisibility(View.GONE);</span>
+                }
+
+
+                // Apply settings
+<span class="nc" id="L195">                barcodeReader.setProperties(properties);</span>
+
+<span class="nc" id="L197">            } catch (Exception e) {</span>
+<span class="nc" id="L198">                Toast.makeText(this, &quot;Error setting scan mode: &quot; + e.getMessage(),</span>
+<span class="nc" id="L199">                        Toast.LENGTH_LONG).show();</span>
+<span class="nc" id="L200">            }</span>
+        }
+<span class="fc" id="L202">    }</span>
+
+    @Override
+    public void onBarcodeEvent(final BarcodeReadEvent event) {
+<span class="fc" id="L206">        runOnUiThread(new Runnable() {</span>
+            @Override
+            public void run() {
+                // update UI to reflect the data
+<span class="fc" id="L210">                List&lt;String&gt; list = new ArrayList&lt;String&gt;();</span>
+<span class="fc" id="L211">                list.add(&quot;Barcode data: &quot; + event.getBarcodeData());</span>
+<span class="fc" id="L212">                list.add(&quot;Character Set: &quot; + event.getCharset());</span>
+<span class="fc" id="L213">                list.add(&quot;Code ID: &quot; + event.getCodeId());</span>
+<span class="fc" id="L214">                list.add(&quot;AIM ID: &quot; + event.getAimId());</span>
+<span class="fc" id="L215">                list.add(&quot;Timestamp: &quot; + event.getTimestamp());</span>
+
+<span class="fc" id="L217">                final ArrayAdapter&lt;String&gt; dataAdapter = new ArrayAdapter&lt;String&gt;(</span>
+                        AutomaticBarcodeActivity.this, android.R.layout.simple_list_item_1, list);
+
+<span class="fc" id="L220">                barcodeList.setAdapter(dataAdapter);</span>
+<span class="fc" id="L221">            }</span>
+        });
+<span class="fc" id="L223">    }</span>
+
+    // When using Automatic Trigger control do not need to implement the
+    // onTriggerEvent function
+    @Override
+    public void onTriggerEvent(TriggerStateChangeEvent event) {
+<span class="fc" id="L229">    }</span>
+
+    @Override
+    public void onFailureEvent(BarcodeFailureEvent arg0) {
+<span class="fc" id="L233">    }</span>
+
+    @Override
+    public void onResume() {
+<span class="fc" id="L237">        super.onResume();</span>
+<span class="pc bpc" id="L238" title="1 of 2 branches missed.">        if (barcodeReader != null) {</span>
+            try {
+<span class="nc" id="L240">                barcodeReader.claim();</span>
+<span class="nc" id="L241">            } catch (ScannerUnavailableException e) {</span>
+//                e.printStackTrace();
+<span class="nc" id="L243">                Toast.makeText(this, &quot;Scanner unavailable&quot;, Toast.LENGTH_SHORT).show();</span>
+<span class="nc" id="L244">            }</span>
+        }
+<span class="fc" id="L246">    }</span>
+
+    @Override
+    public void onPause() {
+<span class="fc" id="L250">        super.onPause();</span>
+<span class="pc bpc" id="L251" title="1 of 2 branches missed.">        if (barcodeReader != null) {</span>
+            // release the scanner claim so we don't get any scanner
+            // notifications while paused.
+<span class="nc" id="L254">            barcodeReader.release();</span>
+        }
+<span class="fc" id="L256">    }</span>
+
+    @Override
+    public void onDestroy() {
+<span class="fc" id="L260">        super.onDestroy();</span>
+<span class="pc bpc" id="L261" title="1 of 2 branches missed.">        if (barcodeReader != null) {</span>
+            // unregister barcode event listener
+<span class="nc" id="L263">            barcodeReader.removeBarcodeListener(this);</span>
+
+            // unregister trigger state change listener
+<span class="nc" id="L266">            barcodeReader.removeTriggerListener(this);</span>
+        }
+<span class="fc" id="L268">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

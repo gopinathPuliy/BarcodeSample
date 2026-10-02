@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.honeywell.barcodeexample.ScannerSelectionBarcodeActivityTest1" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-07-30T06:42:40" hostname="12bc08bb84dd" time="2.145">
+  <properties/>
+  <testcase name="onTriggerEvent" classname="com.honeywell.barcodeexample.ScannerSelectionBarcodeActivityTest1" time="2.078"/>
+  <testcase name="scannerSelection" classname="com.honeywell.barcodeexample.ScannerSelectionBarcodeActivityTest1" time="0.021"/>
+  <testcase name="onBarcodeEvent" classname="com.honeywell.barcodeexample.ScannerSelectionBarcodeActivityTest1" time="0.026"/>
+  <testcase name="onFailureEvent" classname="com.honeywell.barcodeexample.ScannerSelectionBarcodeActivityTest1" time="0.019"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[Properties file org/powermock/default.properties is found in 2 places: 
+ConfigurationSource{location='file:/root/.gradle/caches/modules-2/files-2.1/org.powermock/powermock-core/2.0.9/50e5d2652fd311ee9c33919dfadd44504a582210/powermock-core-2.0.9.jar!/org/powermock/default.properties}
+ConfigurationSource{location='file:/root/.gradle/caches/modules-2/files-2.1/org.powermock/powermock-core/2.0.9/50e5d2652fd311ee9c33919dfadd44504a582210/powermock-core-2.0.9.jar!/org/powermock/default.properties}. Which one will be used is undefined. Please, remove duplicated configuration file (or second PowerMock jar file) from class path to have stable tests.Properties file org/powermock/default.properties is found in 2 places: 
+ConfigurationSource{location='file:/root/.gradle/caches/modules-2/files-2.1/org.powermock/powermock-core/2.0.9/50e5d2652fd311ee9c33919dfadd44504a582210/powermock-core-2.0.9.jar!/org/powermock/default.properties}
+ConfigurationSource{location='file:/root/.gradle/caches/modules-2/files-2.1/org.powermock/powermock-core/2.0.9/50e5d2652fd311ee9c33919dfadd44504a582210/powermock-core-2.0.9.jar!/org/powermock/default.properties}. Which one will be used is undefined. Please, remove duplicated configuration file (or second PowerMock jar file) from class path to have stable tests.]]></system-err>
+</testsuite>

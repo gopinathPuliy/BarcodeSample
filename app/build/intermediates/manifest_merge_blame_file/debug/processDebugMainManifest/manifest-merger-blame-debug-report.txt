@@ -1,0 +1,117 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.honeywell.barcodeexample"
+4    android:versionCode="197000129"
+5    android:versionName="1.97.00.0129" >
+6
+7    <uses-sdk
+7-->C:\Users\gopinath.puliy\Documents\AI Force\BarcodeExample\app\src\main\AndroidManifest.xml:4:5-74
+8        android:minSdkVersion="27"
+8-->C:\Users\gopinath.puliy\Documents\AI Force\BarcodeExample\app\src\main\AndroidManifest.xml:4:15-41
+9        android:targetSdkVersion="36" />
+9-->C:\Users\gopinath.puliy\Documents\AI Force\BarcodeExample\app\src\main\AndroidManifest.xml:4:42-71
+10
+11    <uses-permission android:name="android.permission.BLUETOOTH" />
+11-->C:\Users\gopinath.puliy\Documents\AI Force\BarcodeExample\app\src\main\AndroidManifest.xml:5:5-68
+11-->C:\Users\gopinath.puliy\Documents\AI Force\BarcodeExample\app\src\main\AndroidManifest.xml:5:22-65
+12    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+12-->C:\Users\gopinath.puliy\Documents\AI Force\BarcodeExample\app\src\main\AndroidManifest.xml:6:5-74
+12-->C:\Users\gopinath.puliy\Documents\AI Force\BarcodeExample\app\src\main\AndroidManifest.xml:6:22-71
+13    <uses-permission android:name="com.honeywell.decode.permission.DECODE" />
+13-->[:DataCollectionLib] C:\Users\gopinath.puliy\.gradle\caches\8.13\transforms\db98be15f78faaacde8cd1752bf1e3fb\transformed\DataCollection\AndroidManifest.xml:9:5-78
+13-->[:DataCollectionLib] C:\Users\gopinath.puliy\.gradle\caches\8.13\transforms\db98be15f78faaacde8cd1752bf1e3fb\transformed\DataCollection\AndroidManifest.xml:9:22-75
+14
+15    <application
+15-->C:\Users\gopinath.puliy\Documents\AI Force\BarcodeExample\app\src\main\AndroidManifest.xml:10:5-60:19
+16        android:allowBackup="true"
+16-->C:\Users\gopinath.puliy\Documents\AI Force\BarcodeExample\app\src\main\AndroidManifest.xml:10:18-44
+17        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+17-->[androidx.core:core:1.5.0] C:\Users\gopinath.puliy\.gradle\caches\8.13\transforms\0cb9f6d2b9198c09f700833de00de4f3\transformed\core-1.5.0\AndroidManifest.xml:24:18-86
+18        android:debuggable="true"
+19        android:extractNativeLibs="false"
+20        android:icon="@drawable/barcode_example_icon"
+20-->C:\Users\gopinath.puliy\Documents\AI Force\BarcodeExample\app\src\main\AndroidManifest.xml:10:45-90
+21        android:label="@string/app_name"
+21-->C:\Users\gopinath.puliy\Documents\AI Force\BarcodeExample\app\src\main\AndroidManifest.xml:10:91-123
+22        android:testOnly="true"
+23        android:theme="@style/AppTheme" >
+23-->C:\Users\gopinath.puliy\Documents\AI Force\BarcodeExample\app\src\main\AndroidManifest.xml:10:124-155
+24        <activity
+24-->C:\Users\gopinath.puliy\Documents\AI Force\BarcodeExample\app\src\main\AndroidManifest.xml:12:9-22:20
+25            android:name="com.honeywell.barcodeexample.MainActivity"
+25-->C:\Users\gopinath.puliy\Documents\AI Force\BarcodeExample\app\src\main\AndroidManifest.xml:12:76-132
+26            android:exported="true"
+26-->C:\Users\gopinath.puliy\Documents\AI Force\BarcodeExample\app\src\main\AndroidManifest.xml:12:19-42
+27            android:label="@string/app_name" >
+27-->C:\Users\gopinath.puliy\Documents\AI Force\BarcodeExample\app\src\main\AndroidManifest.xml:12:43-75
+28            <intent-filter>
+28-->C:\Users\gopinath.puliy\Documents\AI Force\BarcodeExample\app\src\main\AndroidManifest.xml:14:13-20:29
+29                <action android:name="android.intent.action.MAIN" />
+29-->C:\Users\gopinath.puliy\Documents\AI Force\BarcodeExample\app\src\main\AndroidManifest.xml:16:17-68
+29-->C:\Users\gopinath.puliy\Documents\AI Force\BarcodeExample\app\src\main\AndroidManifest.xml:16:25-66
+30
+31                <category android:name="android.intent.category.LAUNCHER" />
+31-->C:\Users\gopinath.puliy\Documents\AI Force\BarcodeExample\app\src\main\AndroidManifest.xml:18:17-76
+31-->C:\Users\gopinath.puliy\Documents\AI Force\BarcodeExample\app\src\main\AndroidManifest.xml:18:27-74
+32            </intent-filter>
+33        </activity>
+34        <activity
+34-->C:\Users\gopinath.puliy\Documents\AI Force\BarcodeExample\app\src\main\AndroidManifest.xml:24:9-34:20
+35            android:name="com.honeywell.barcodeexample.AutomaticBarcodeActivity"
+35-->C:\Users\gopinath.puliy\Documents\AI Force\BarcodeExample\app\src\main\AndroidManifest.xml:24:75-143
+36            android:exported="true"
+36-->C:\Users\gopinath.puliy\Documents\AI Force\BarcodeExample\app\src\main\AndroidManifest.xml:24:19-42
+37            android:label="@string/barcode" >
+37-->C:\Users\gopinath.puliy\Documents\AI Force\BarcodeExample\app\src\main\AndroidManifest.xml:24:43-74
+38            <intent-filter>
+38-->C:\Users\gopinath.puliy\Documents\AI Force\BarcodeExample\app\src\main\AndroidManifest.xml:26:13-32:29
+39                <action android:name="android.intent.action.AUTOMATICBARCODEACTIVITY" />
+39-->C:\Users\gopinath.puliy\Documents\AI Force\BarcodeExample\app\src\main\AndroidManifest.xml:28:17-88
+39-->C:\Users\gopinath.puliy\Documents\AI Force\BarcodeExample\app\src\main\AndroidManifest.xml:28:25-86
+40
+41                <category android:name="android.intent.category.DEFAULT" />
+41-->C:\Users\gopinath.puliy\Documents\AI Force\BarcodeExample\app\src\main\AndroidManifest.xml:30:17-75
+41-->C:\Users\gopinath.puliy\Documents\AI Force\BarcodeExample\app\src\main\AndroidManifest.xml:30:27-73
+42            </intent-filter>
+43        </activity>
+44        <activity
+44-->C:\Users\gopinath.puliy\Documents\AI Force\BarcodeExample\app\src\main\AndroidManifest.xml:36:9-46:20
+45            android:name="com.honeywell.barcodeexample.ClientBarcodeActivity"
+45-->C:\Users\gopinath.puliy\Documents\AI Force\BarcodeExample\app\src\main\AndroidManifest.xml:36:75-140
+46            android:exported="true"
+46-->C:\Users\gopinath.puliy\Documents\AI Force\BarcodeExample\app\src\main\AndroidManifest.xml:36:19-42
+47            android:label="@string/barcode" >
+47-->C:\Users\gopinath.puliy\Documents\AI Force\BarcodeExample\app\src\main\AndroidManifest.xml:36:43-74
+48            <intent-filter>
+48-->C:\Users\gopinath.puliy\Documents\AI Force\BarcodeExample\app\src\main\AndroidManifest.xml:38:13-44:29
+49                <action android:name="android.intent.action.CLIENTBARCODEACTIVITY" />
+49-->C:\Users\gopinath.puliy\Documents\AI Force\BarcodeExample\app\src\main\AndroidManifest.xml:40:17-85
+49-->C:\Users\gopinath.puliy\Documents\AI Force\BarcodeExample\app\src\main\AndroidManifest.xml:40:25-83
+50
+51                <category android:name="android.intent.category.DEFAULT" />
+51-->C:\Users\gopinath.puliy\Documents\AI Force\BarcodeExample\app\src\main\AndroidManifest.xml:30:17-75
+51-->C:\Users\gopinath.puliy\Documents\AI Force\BarcodeExample\app\src\main\AndroidManifest.xml:30:27-73
+52            </intent-filter>
+53        </activity>
+54        <activity
+54-->C:\Users\gopinath.puliy\Documents\AI Force\BarcodeExample\app\src\main\AndroidManifest.xml:48:9-58:20
+55            android:name="com.honeywell.barcodeexample.ScannerSelectionBarcodeActivity"
+55-->C:\Users\gopinath.puliy\Documents\AI Force\BarcodeExample\app\src\main\AndroidManifest.xml:48:75-150
+56            android:exported="true"
+56-->C:\Users\gopinath.puliy\Documents\AI Force\BarcodeExample\app\src\main\AndroidManifest.xml:48:19-42
+57            android:label="@string/barcode" >
+57-->C:\Users\gopinath.puliy\Documents\AI Force\BarcodeExample\app\src\main\AndroidManifest.xml:48:43-74
+58            <intent-filter>
+58-->C:\Users\gopinath.puliy\Documents\AI Force\BarcodeExample\app\src\main\AndroidManifest.xml:50:13-56:29
+59                <action android:name="android.intent.action.SCANNERSELECTBARCODEACTIVITY" />
+59-->C:\Users\gopinath.puliy\Documents\AI Force\BarcodeExample\app\src\main\AndroidManifest.xml:52:17-92
+59-->C:\Users\gopinath.puliy\Documents\AI Force\BarcodeExample\app\src\main\AndroidManifest.xml:52:25-90
+60
+61                <category android:name="android.intent.category.DEFAULT" />
+61-->C:\Users\gopinath.puliy\Documents\AI Force\BarcodeExample\app\src\main\AndroidManifest.xml:30:17-75
+61-->C:\Users\gopinath.puliy\Documents\AI Force\BarcodeExample\app\src\main\AndroidManifest.xml:30:27-73
+62            </intent-filter>
+63        </activity>
+64    </application>
+65
+66</manifest>

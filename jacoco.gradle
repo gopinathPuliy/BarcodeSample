@@ -1,0 +1,70 @@
+apply plugin: 'jacoco'
+
+jacoco {
+  toolVersion = "0.8.11"
+}
+
+android {
+  testOptions {
+    unitTests.all {
+      jacoco {
+        includeNoLocationClasses = true
+      }
+    }
+  }
+}
+
+project.afterEvaluate {
+  def buildTypes = android.buildTypes.collect { it.name }
+  def productFlavors = android.productFlavors.collect { it.name }
+
+  if (!productFlavors) productFlavors.add('')
+
+  productFlavors.each { productFlavorName ->
+    buildTypes.each { buildTypeName ->
+      def sourceName = productFlavorName ? "${productFlavorName}${buildTypeName.capitalize()}" : buildTypeName
+      def sourcePath = productFlavorName ? "${productFlavorName}/${buildTypeName}" : buildTypeName
+      def testTaskName = "test${sourceName.capitalize()}UnitTest"
+      def coverageTaskName = "${testTaskName}Coverage"
+      def compilePath =  "compile${sourceName.capitalize()}JavaWithJavac"
+
+      tasks.register(coverageTaskName, JacocoReport) {
+        group = "Reporting"
+        description = "Generate Jacoco coverage reports on the ${sourceName.capitalize()} build."
+        dependsOn testTaskName
+
+        reports {
+            xml.required.set(true)
+            html.required.set(true)
+        }
+
+        classDirectories.setFrom(fileTree(
+                dir: "${project.buildDir}/intermediates/javac/${sourceName}/${compilePath}/classes",
+                excludes: ['**/R.class', '**/R$*.class', '**/*$ViewInjector*.*', '**/*$ViewBinder*.*', '**/BuildConfig.*', '**/Manifest*.*']
+        ))
+
+        def coverageSourceDirs = [
+                "src/main/java",
+                "src/$productFlavorName/java",
+                "src/$buildTypeName/java"
+        ]
+        additionalSourceDirs.setFrom(files(coverageSourceDirs))
+        sourceDirectories.setFrom(files(coverageSourceDirs))
+        executionData.setFrom(files("${project.buildDir}/jacoco/test${sourceName.capitalize()}UnitTest.exec"))
+
+        doFirst {
+          println "Build directory: ${project.buildDir}"
+          println "Class directories: ${classDirectories.files}"
+          println "Source directories: ${sourceDirectories.files}"
+          println "Execution data: ${executionData.files}"
+          fileTree(dir: "${project.buildDir}/intermediates/javac/${sourcePath}/classes").visit { println it.file }
+        }
+      }
+    }
+  }
+}
+
+tasks.withType(Test).configureEach {
+  jacoco.includeNoLocationClasses = true
+  jacoco.excludes = ['jdk.internal.*']
+}

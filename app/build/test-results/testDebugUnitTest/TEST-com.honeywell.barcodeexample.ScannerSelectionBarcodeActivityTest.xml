@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.honeywell.barcodeexample.ScannerSelectionBarcodeActivityTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2026-07-30T06:42:38" hostname="12bc08bb84dd" time="1.452">
+  <properties/>
+  <testcase name="claimBarcodeReader_catch" classname="com.honeywell.barcodeexample.ScannerSelectionBarcodeActivityTest" time="1.432"/>
+  <testcase name="testclaimBarcodeReader" classname="com.honeywell.barcodeexample.ScannerSelectionBarcodeActivityTest" time="0.001"/>
+  <testcase name="testcreateBarcodeReaderConnection" classname="com.honeywell.barcodeexample.ScannerSelectionBarcodeActivityTest" time="0.004"/>
+  <testcase name="createBarcodeReaderConnection_catch" classname="com.honeywell.barcodeexample.ScannerSelectionBarcodeActivityTest" time="0.003"/>
+  <testcase name="testInstilaze" classname="com.honeywell.barcodeexample.ScannerSelectionBarcodeActivityTest" time="0.002"/>
+  <testcase name="createBarcodeReaderConnection" classname="com.honeywell.barcodeexample.ScannerSelectionBarcodeActivityTest" time="0.008"/>
+  <testcase name="claimBarcodeReader" classname="com.honeywell.barcodeexample.ScannerSelectionBarcodeActivityTest" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

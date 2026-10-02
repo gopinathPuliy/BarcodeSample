@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="match_parent">
+
+<!-- Main vertical content -->
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_alignParentTop="true"
+    android:layout_above="@+id/toggleContinuous">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#5C8A8A"
+        android:gravity="left"
+        android:padding="6dp"
+        android:text="@string/txtBarcodeTitle"
+        android:textColor="#FFFFFF"
+        android:textSize="13sp" />
+
+    <ListView
+        android:id="@+id/listViewBarcodeData"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="25sp" />
+    <TextView
+        android:id="@+id/countValueLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textSize="16sp"
+        android:visibility="gone"
+        android:layout_marginTop="8dp"/>
+</LinearLayout>
+
+<!-- Toggle button anchored bottom-right -->
+<ToggleButton
+    android:id="@+id/toggleContinuous"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textOn="Continuous ON"
+    android:textOff="Continuous OFF"
+    android:layout_alignParentBottom="true"
+    android:layout_alignParentEnd="true"
+    android:layout_margin="16dp"/>
+</RelativeLayout>

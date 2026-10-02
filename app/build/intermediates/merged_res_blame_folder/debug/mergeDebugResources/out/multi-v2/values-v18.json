@@ -1,0 +1,19 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.honeywell.barcodeexample.app-mergeDebugResources-17:/values-v18/values-v18.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\gopinath.puliy\\.gradle\\caches\\8.13\\transforms\\827f2edcd61d3b229cfb8cfb2e26cf43\\transformed\\appcompat-1.3.1\\res\\values-v18\\values-v18.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "48",
+                        "endOffsets": "99"
+                    }
+                }
+            ]
+        }
+    ]
+}
